@@ -1,0 +1,27 @@
+.mybars{
+    /* width: 5px; */
+    background-color: blue;
+    display: inline-block;
+    margin:1px;
+
+
+}
+.allbars{
+     margin-top:50px;
+     margin-left: 10px;
+     
+}
+
+.allbtns{
+
+    display: inline-block;
+    margin:30px;
+    margin-right: 20;
+    padding: auto;
+    width: 30%;
+}
+
+.slider{
+    width: 100%;
+    
+}
