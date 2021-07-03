@@ -43,6 +43,21 @@ export function msortanimations(arr){
     return animate;
 }
 
+
+export function quicksortanimations(arr){
+const animate=[];
+const n=arr.length;
+
+
+quicksort(arr,0,n-1,animate);
+
+return animate;
+
+
+}
+
+
+
 function mergehelp(ar,start,mid,end,animate)
 {
     
@@ -117,6 +132,65 @@ if(start<end){
 }
 
 else return;
+
+
+}
+
+
+function partition(arr,start,end,animate)
+{
+
+    let pivot=arr[end];
+    let i=start-1;
+
+    animate.push([end,pivot,1]);
+
+
+    for(let j=start;j<end;j++){
+    
+        animate.push([j]);
+        animate.push([j]);
+        if(arr[j]<pivot){
+            i++;
+           
+             animate.push([i,arr[i],j,arr[j]]);
+
+            let tmp=arr[i];
+            arr[i]=arr[j];
+            arr[j]=tmp;
+
+            
+        }
+        
+    }
+    animate.push([end,pivot]);
+    
+    animate.push([i+1,arr[i+1],end,arr[end]]);
+
+    let tmp=arr[i+1];
+    arr[i+1]=arr[end];
+    arr[end]=tmp;
+    
+
+return i+1;
+
+}
+
+
+
+
+
+
+
+function quicksort(arr,start,end,animate){
+   
+
+if(start<end){
+   
+    let pi=partition(arr,start, end,animate);
+    quicksort(arr,start,pi-1,animate);
+    quicksort(arr,pi+1,end,animate);
+}
 
 
 }

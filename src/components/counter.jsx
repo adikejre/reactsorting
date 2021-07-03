@@ -38,15 +38,14 @@ insertionSort=()=>{
     let ar=this.state.arrvals;
     var i,j,k;
     const animate=[];
-    // document.getElementsByClassName('mybars')[0].style.backgroundColor='red';
+    
 
     for(i=0;i<n;i++)
     {   var minid=i;
         
         for(j=i+1;j<n;j++)
         { 
-            //document.getElementsByClassName('mybars')[j].style.backgroundColor='blue';
-            // const bar1=document.getElementsByClassName('mybars')[j];
+            
             animate.push([j]);
             animate.push([i,j]);
 
@@ -55,34 +54,11 @@ insertionSort=()=>{
                 
                 minid=j;
                 
-                //document.getElementsByClassName('mybars')[i].style.backgroundColor='red';
-            //     setTimeout(() =>{
-                
-            //   // this.sleep(100);
-                
-            //    bar1.style.backgroundColor='red';
-            //   // document.getElementsByClassName('mybars')[i].style.backgroundColor='blue';
-
-            //     },10*j);
-            //     bar1.style.backgroundColor='blue';
+            
 
             }
             
-            // else{
-            //     setTimeout(() =>{
-                
-            //         // this.sleep(100);
-                      
-            //          bar1.style.backgroundColor='red';
-            //         // document.getElementsByClassName('mybars')[i].style.backgroundColor='blue';
-      
-            //           },10*j);
-            // }
-
-
-            
-            
-
+         
 
         }
         animate.push([i,minid,ar[minid],ar[i]]);
@@ -91,29 +67,15 @@ insertionSort=()=>{
         var comp2=document.getElementsByClassName('mybars')[minid];
 
 
-
-        
-        
-        //comp1.style.height=`${ar[minid]}px`;
-        
         
         ar[i]=ar[minid];
-        //console.log(document.getElementsByClassName('mybars')[i].style.height);
-       
-       // comp2.style.height=`${tmp}px`;
        
        
         ar[minid]=tmp;
-        // setTimeout(() =>{
+       
         
 
-        //     comp1.style.height=`${ar[minid]}px`;
-        //     ar[i]=ar[minid];
-        //     //console.log(document.getElementsByClassName('mybars')[i].style.height);
-        //     comp2.style.height=`${tmp}px`;
-        //     ar[minid]=tmp;
-        // },10*i
-        // );
+       
     }
 
     for(i=0;i<n;i++)
@@ -142,9 +104,7 @@ animateinsertion=()=>{
         const arrayBars=document.getElementsByClassName('mybars');
         
             if(animations[i].length===4){
-                // j++;
-                // q+=2*(n-1-j);
-                // console.log("swappp");
+                
                 setTimeout(() => {
                     const [barOneIdx, newHeightidx,newHeight,bar1h] = animations[i];
                    // console.log("n swap",barOneIdx,newHeightidx);
@@ -273,11 +233,11 @@ for(let i=0;i<animations.length;i++)
 
 
 animatemerge=()=>{
-    console.log("heyy");
+    
     const animations=sortmethods.msortanimations(this.state.arrvals);
     const arrayBars=document.getElementsByClassName('mybars');
     let n=this.state.arrnum;
-    console.log(animations.length);
+   // console.log(animations.length);
 for(let i=0;i<animations.length;i++){
 
     if(animations[i].length===1){
@@ -339,7 +299,86 @@ for(let i=0;i<animations.length;i++){
 
 }
 
+animatequicksort=()=>{
 
+    const animations=sortmethods.quicksortanimations(this.state.arrvals);
+    const arrayBars=document.getElementsByClassName('mybars');
+    let n=this.state.arrnum;
+    let col=true;
+    let col2=true;
+    for(let i=0;i<animations.length;i++){
+
+    if(animations[i].length===3){
+
+        const [pivotIdx] = animations[i];
+        const barOneStyle = arrayBars[pivotIdx].style;
+        setTimeout(()=>{
+            barOneStyle.backgroundColor = "green";
+    
+        },i*10);
+
+    }
+
+
+
+    if(animations[i].length===2){
+        const [pivotIdx] = animations[i];
+        const barOneStyle = arrayBars[pivotIdx].style;
+        setTimeout(()=>{
+            barOneStyle.backgroundColor = "blue";
+    
+        },i*10);
+        
+    
+       
+
+    }
+    if(animations[i].length===1){
+
+        const [barOneIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        
+        
+    if(col){
+    setTimeout(()=>{
+        barOneStyle.backgroundColor = "red";
+    },i*10);
+    col=false;
+    }
+
+    else{
+        setTimeout(()=>{
+            barOneStyle.backgroundColor = "blue";
+        },i*10);
+        col=true;
+    }
+
+    }
+
+    if(animations[i].length===4){
+        const [barOneIdx,barOneh, barTwoIdx,barTwoh] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        
+    
+    setTimeout(()=>{
+        
+        
+        barOneStyle.height=`${barTwoh}px`;
+        barTwoStyle.height=`${barOneh}px`;
+
+    },i*10);
+
+    }
+
+
+
+
+
+
+    }
+
+}
 
 handleChangeNo = value => {
     this.setState({
@@ -361,6 +400,7 @@ handleChangeNo = value => {
         <button onClick={this.animateinsertion}  >Insertion sort</button> 
         <button onClick={this.animatebubble}  >Bubble sort</button> 
         <button onClick={this.animatemerge}  >Mergesort</button> 
+        <button onClick={this.animatequicksort}  >Quicksort</button> 
         <div className='slider'>
         <Slider
           min={20}
