@@ -47,13 +47,16 @@ export function msortanimations(arr){
 export function quicksortanimations(arr){
 const animate=[];
 const n=arr.length;
-
-
 quicksort(arr,0,n-1,animate);
-
 return animate;
 
+}
 
+export function heapsortanimations(arr){
+const animate=[];
+const n=arr.length;
+heapsort(arr,n,animate);
+return animate;
 }
 
 
@@ -192,5 +195,66 @@ if(start<end){
     quicksort(arr,pi+1,end,animate);
 }
 
+
+}
+
+
+function heapify(arr,n,i,animate){
+
+    let largest=i;
+    let l=2*i+1;
+    let r=2*i+2;
+
+    if(l<n&&arr[l]>arr[largest]){
+        largest=l;
+        animate.push([largest,1]);
+        animate.push([0,0,0,0,0]);
+        
+
+
+
+        animate.push([largest,1,1]);
+
+    }
+    if (r < n && arr[r] > arr[largest])
+    {
+        largest = r;
+        animate.push([largest,1]);
+        animate.push([0,0,0,0,0]);
+        
+
+
+
+        animate.push([largest,1,1]);
+        
+    }
+        
+
+    if(largest!=i){
+        animate.push(i,arr[i],largest,arr[largest]);
+        [arr[i],arr[largest]]=[arr[largest],arr[i]];
+        heapify(arr,n,largest,animate);
+
+    }
+
+
+}
+
+
+function heapsort(arr,n,animate){
+
+    let i=0;
+    for(i=parseInt(n/2)-1;i>=0;i--){
+        heapify(arr,n,i,animate);
+    }
+
+    for(i=n-1;i>0;i--){
+        animate.push([i]);
+        animate.push([i]);
+
+        animate.push([0,arr[0],i,arr[i]]);
+        [arr[0],arr[i]]=[arr[i],arr[0]];
+        heapify(arr,i,0,animate);
+    }
 
 }

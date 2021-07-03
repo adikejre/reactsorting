@@ -380,6 +380,84 @@ animatequicksort=()=>{
 
 }
 
+animateheapsort=()=>{
+    const animations=sortmethods.heapsortanimations(this.state.arrvals);
+    const arrayBars=document.getElementsByClassName('mybars');
+    let n=this.state.arrnum;
+    let col=true;
+    for(let i=0;i<animations.length;i++){
+
+        if(animations[i].length===1){
+
+            const [barOneIdx] = animations[i];
+            const barOneStyle = arrayBars[barOneIdx].style;
+            
+            
+        if(col){
+        setTimeout(()=>{
+            barOneStyle.backgroundColor = "red";
+        },i*30);
+        col=false;
+        }
+    
+        else{
+            setTimeout(()=>{
+                barOneStyle.backgroundColor = "blue";
+            },i*30);
+            col=true;
+        }
+    
+        }
+
+
+        if(animations[i].length===2){
+
+            const [largestIdx] = animations[i];
+            const barOneStyle = arrayBars[largestIdx].style;
+            setTimeout(()=>{
+                barOneStyle.backgroundColor = "green";
+        
+            },i*30);
+    
+        }
+
+        if(animations[i].length===3){
+
+            const [largestIdx] = animations[i];
+            const barOneStyle = arrayBars[largestIdx].style;
+            setTimeout(()=>{
+                barOneStyle.backgroundColor = "blue";
+        
+            },i*30);
+    
+        }
+
+        if(animations[i].length===4){
+            const [barOneIdx,barOneh, barTwoIdx,barTwoh] = animations[i];
+            const barOneStyle = arrayBars[barOneIdx].style;
+            const barTwoStyle = arrayBars[barTwoIdx].style;
+            
+        
+        setTimeout(()=>{
+            
+            
+            barOneStyle.height=`${barTwoh}px`;
+            barTwoStyle.height=`${barOneh}px`;
+    
+        },i*30);
+    
+        }
+
+
+
+    }
+    
+
+
+}
+
+
+
 handleChangeNo = value => {
     this.setState({
       arrnum: value
@@ -401,6 +479,7 @@ handleChangeNo = value => {
         <button onClick={this.animatebubble}  >Bubble sort</button> 
         <button onClick={this.animatemerge}  >Mergesort</button> 
         <button onClick={this.animatequicksort}  >Quicksort</button> 
+        <button onClick={this.animateheapsort}  >Heapsort</button> 
         <div className='slider'>
         <Slider
           min={20}
