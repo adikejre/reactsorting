@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'; 
 import './sort.css';
+import * as sortmethods from '../sortingalgos/sortingfncs';
 class Counter extends Component {
 
     constructor(props) {
@@ -27,28 +28,6 @@ randarray=()=> {
         this.setState({arrvals:arr});
     }
 
-}
-
-fnc =(j)=>{
-    document.getElementsByClassName('mybars')[j].style.backgroundColor='blue';
-
-}
-
-
-sleep=(milliseconds) =>{
-    const date = Date.now();
-    console.log("hty");
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-  }
-
-mydelay = (j)=> {
-
-       console.log(j);
-       var timer = setTimeout(this.fnc, 1000,j);
-    
 }
 
 
@@ -219,15 +198,147 @@ animateinsertion=()=>{
     }
 
 
-    // for(let x=0;x<n;x++){
-    //     const arrayBars=document.getElementsByClassName('mybars');
-    //     setTimeout(() => {
-    //         arrayBars[x].style.backgroundColor = "green";
-            
-    //       }, x * 10);
-    // }
+  
 
 }
+
+
+
+animatebubble=()=>{
+const animations=sortmethods.bubbleanimations(this.state.arrvals);
+const arrayBars=document.getElementsByClassName('mybars');
+let n=this.state.arrnum;
+for(let i=0;i<animations.length;i++)
+{
+    if(animations[i].length===2){
+        const [barOneIdx, barTwoIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        
+    
+    setTimeout(()=>{
+        barOneStyle.backgroundColor = "red";
+        barTwoStyle.backgroundColor = "red";
+
+    },i*10);
+    }
+
+    if(animations[i].length===3){
+        const [barOneIdx, barTwoIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        
+    
+    setTimeout(()=>{
+        barOneStyle.backgroundColor = "blue";
+        barTwoStyle.backgroundColor = "blue";
+
+    },i*10);
+    }
+
+    if(animations[i].length===4){
+        const [barOneIdx,barOneh, barTwoIdx,barTwoh] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        
+    
+    setTimeout(()=>{
+        
+        
+        barOneStyle.height=`${barTwoh}px`;
+        barTwoStyle.height=`${barOneh}px`;
+
+    },i*10);
+    }
+    if(animations[i].length===1){
+        const [greenbar] = animations[i]; 
+        setTimeout(() => {
+            arrayBars[greenbar].style.backgroundColor = "green";
+            
+          }, i * 10);
+
+       }
+
+
+    
+
+}
+
+
+
+
+}
+
+
+
+
+animatemerge=()=>{
+    console.log("heyy");
+    const animations=sortmethods.msortanimations(this.state.arrvals);
+    const arrayBars=document.getElementsByClassName('mybars');
+    let n=this.state.arrnum;
+    console.log(animations.length);
+for(let i=0;i<animations.length;i++){
+
+    if(animations[i].length===1){
+        const [greenbar] = animations[i]; 
+        setTimeout(() => {
+            arrayBars[greenbar].style.backgroundColor = "green";
+            
+          }, i * 10);
+
+       }
+
+   else if(i%3!==2){
+        var changecolor="red";
+        if(i%3==0){
+            const [barOneIdx, barTwoIdx] = animations[i];
+            const barOneStyle = arrayBars[barOneIdx].style;
+            const barTwoStyle = arrayBars[barTwoIdx].style;
+            
+        
+        setTimeout(()=>{
+            barOneStyle.backgroundColor = "red";
+            barTwoStyle.backgroundColor = "red";
+    
+        },i*10);
+        }
+        if(i%3==1){
+            changecolor="blue";
+        
+        const [barOneIdx, barTwoIdx] = animations[i];
+            const barOneStyle = arrayBars[barOneIdx].style;
+            const barTwoStyle = arrayBars[barTwoIdx].style;
+            
+        
+        setTimeout(()=>{
+            barOneStyle.backgroundColor = "blue";
+            barTwoStyle.backgroundColor = "blue";
+    
+        },i*10);
+    }
+    }
+    else{ 
+        const [heightIdx, newheight] = animations[i];
+        const barOneStyle = arrayBars[heightIdx].style;
+        setTimeout(()=>{
+        
+        
+            barOneStyle.height=`${newheight}px`;
+            
+    
+        },i*10);
+        
+
+    }
+
+
+}
+
+
+
+}
+
 
 
 handleChangeNo = value => {
@@ -248,6 +359,8 @@ handleChangeNo = value => {
        <div className="allbtns">
         <button onClick={this.randarray}  >Reset</button> 
         <button onClick={this.animateinsertion}  >Insertion sort</button> 
+        <button onClick={this.animatebubble}  >Bubble sort</button> 
+        <button onClick={this.animatemerge}  >Mergesort</button> 
         <div className='slider'>
         <Slider
           min={20}
