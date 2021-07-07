@@ -7,21 +7,35 @@
 
 }
 .allbars{
-     margin-top:50px;
+     margin-top:20px;
      margin-left: 10px;
      
 }
 
 .allbtns{
 
-    display: inline-block;
-    margin:30px;
-    margin-right: 20;
-    padding: auto;
-    width: 30%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 250px;
+    margin-left: 10px;
+    width: 80%;
 }
 
-.slider{
-    width: 100%;
+
+
+
+
+.btn {
+    margin: 1px;
     
+
 }
+
+.links{
+font-size: 15px;
+color: #FFF;
+}
+
+a {
+    color: #FFF;
+  }

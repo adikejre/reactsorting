@@ -24,21 +24,24 @@ for(let i=0;i<n;i++)
         }
     }
 }
-for(let k=0;k<n;k++)
-animate.push([k]);
+// for(let k=0;k<n;k++)
+// animate.push([k]);
 
 return animate;
 }
 
 
 export function msortanimations(arr){
+    
     const animate=[];
     
     const n=arr.length;
     console.log(n);
     mergsort(arr,0,n-1,animate);
-    for(let x=0;x<n;x++)
-    animate.push([x]);
+    // for(let x=0;x<n;x++)
+    // {
+    //     animate.push([x]);
+    // }
 
     return animate;
 }

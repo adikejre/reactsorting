@@ -3,6 +3,11 @@ import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'; 
 import './sort.css';
 import * as sortmethods from '../sortingalgos/sortingfncs';
+ import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import {Link} from 'react-router-dom';
+
 class Counter extends Component {
 
     constructor(props) {
@@ -12,7 +17,8 @@ class Counter extends Component {
 
 state={
     arrvals:[],
-    arrnum:50
+    arrnum:50,
+    animspeed:10
 
 };
 
@@ -24,7 +30,7 @@ randarray=()=> {
     let arr=[];
     this.setState({arrvals:arr});
     for(var i=0;i<this.state.arrnum;i++){
-        arr.push(Math.floor(Math.random() * (600 - 20) + 20));
+        arr.push(Math.floor(Math.random() * (550 - 20) + 20));
         this.setState({arrvals:arr});
     }
 
@@ -78,10 +84,10 @@ insertionSort=()=>{
        
     }
 
-    for(i=0;i<n;i++)
-    {
-        animate.push([i,i,i]);
-    }
+    // for(i=0;i<n;i++)
+    // {
+    //     animate.push([i,i,i]);
+    // }
 
     return animate;
 }
@@ -96,6 +102,7 @@ animateinsertion=()=>{
     
     let j=0;
     let n=this.state.arrnum;
+    let speed=this.state.animspeed;
     let myar=this.state.arrvals;
     let q=2*(n-1);
     
@@ -116,32 +123,32 @@ animateinsertion=()=>{
                     arrayBars[newHeightidx].style.height= `${temp}px`;
                     
 
-                  }, i * 10);
+                  }, i * speed);
                 //swap
             }
             else{
 
-               // console.log("n",barOneIdx,barTwoIdx);
-               if(animations[i].length===3){
-                const [greenbar] = animations[i]; 
-                setTimeout(() => {
-                    arrayBars[greenbar].style.backgroundColor = "green";
+               
+            //    if(animations[i].length===3){
+            //     const [greenbar] = animations[i]; 
+            //     setTimeout(() => {
+            //         arrayBars[greenbar].style.backgroundColor = "green";
                     
-                  }, i * 10);
+            //       }, i * speed);
 
-               }
-
-
+            //    }
 
 
-                else if(animations[i].length===1){
+
+
+                if(animations[i].length===1){
                     const [barOneIdx] = animations[i];
                     const barOneStyle = arrayBars[barOneIdx].style;
                 
                     setTimeout(() => {
                         barOneStyle.backgroundColor = "red";
                         
-                      }, i * 10);
+                      }, i * speed);
                 }
                 else{ 
                 const [barOneIdx, barTwoIdx] = animations[i];
@@ -150,7 +157,7 @@ animateinsertion=()=>{
                     setTimeout(() => {
                         barOneStyle.backgroundColor = "blue";
                         barTwoStyle.backgroundColor = "blue";
-                      }, i * 10);
+                      }, i * speed);
                 }
             }
 
@@ -167,6 +174,7 @@ animateinsertion=()=>{
 animatebubble=()=>{
 const animations=sortmethods.bubbleanimations(this.state.arrvals);
 const arrayBars=document.getElementsByClassName('mybars');
+let speed=this.state.animspeed;
 let n=this.state.arrnum;
 for(let i=0;i<animations.length;i++)
 {
@@ -180,7 +188,7 @@ for(let i=0;i<animations.length;i++)
         barOneStyle.backgroundColor = "red";
         barTwoStyle.backgroundColor = "red";
 
-    },i*10);
+    },i*speed);
     }
 
     if(animations[i].length===3){
@@ -193,7 +201,7 @@ for(let i=0;i<animations.length;i++)
         barOneStyle.backgroundColor = "blue";
         barTwoStyle.backgroundColor = "blue";
 
-    },i*10);
+    },i*speed);
     }
 
     if(animations[i].length===4){
@@ -208,16 +216,16 @@ for(let i=0;i<animations.length;i++)
         barOneStyle.height=`${barTwoh}px`;
         barTwoStyle.height=`${barOneh}px`;
 
-    },i*10);
+    },i*speed);
     }
-    if(animations[i].length===1){
-        const [greenbar] = animations[i]; 
-        setTimeout(() => {
-            arrayBars[greenbar].style.backgroundColor = "green";
+    // if(animations[i].length===1){
+    //     const [greenbar] = animations[i]; 
+    //     setTimeout(() => {
+    //         arrayBars[greenbar].style.backgroundColor = "green";
             
-          }, i * 10);
+    //       }, i * speed);
 
-       }
+    //    }
 
 
     
@@ -237,19 +245,21 @@ animatemerge=()=>{
     const animations=sortmethods.msortanimations(this.state.arrvals);
     const arrayBars=document.getElementsByClassName('mybars');
     let n=this.state.arrnum;
+    let speed=this.state.animspeed;
    // console.log(animations.length);
 for(let i=0;i<animations.length;i++){
 
-    if(animations[i].length===1){
-        const [greenbar] = animations[i]; 
-        setTimeout(() => {
-            arrayBars[greenbar].style.backgroundColor = "green";
+    // if(animations[i].length===1){
+    //     const [greenbar] = animations[i]; 
+
+    //     setTimeout(() => {
+    //         arrayBars[greenbar].style.backgroundColor = "green";
             
-          }, i * 10);
+    //       }, i * speed);
 
-       }
+    //    }
 
-   else if(i%3!==2){
+    if(i%3!==2){
         var changecolor="red";
         if(i%3==0){
             const [barOneIdx, barTwoIdx] = animations[i];
@@ -261,7 +271,7 @@ for(let i=0;i<animations.length;i++){
             barOneStyle.backgroundColor = "red";
             barTwoStyle.backgroundColor = "red";
     
-        },i*10);
+        },i*speed);
         }
         if(i%3==1){
             changecolor="blue";
@@ -275,7 +285,7 @@ for(let i=0;i<animations.length;i++){
             barOneStyle.backgroundColor = "blue";
             barTwoStyle.backgroundColor = "blue";
     
-        },i*10);
+        },i*speed);
     }
     }
     else{ 
@@ -287,7 +297,7 @@ for(let i=0;i<animations.length;i++){
             barOneStyle.height=`${newheight}px`;
             
     
-        },i*10);
+        },i*speed);
         
 
     }
@@ -303,6 +313,7 @@ animatequicksort=()=>{
 
     const animations=sortmethods.quicksortanimations(this.state.arrvals);
     const arrayBars=document.getElementsByClassName('mybars');
+    let speed=this.state.animspeed;
     let n=this.state.arrnum;
     let col=true;
     let col2=true;
@@ -315,7 +326,7 @@ animatequicksort=()=>{
         setTimeout(()=>{
             barOneStyle.backgroundColor = "green";
     
-        },i*10);
+        },i*speed);
 
     }
 
@@ -327,7 +338,7 @@ animatequicksort=()=>{
         setTimeout(()=>{
             barOneStyle.backgroundColor = "blue";
     
-        },i*10);
+        },i*speed);
         
     
        
@@ -342,14 +353,14 @@ animatequicksort=()=>{
     if(col){
     setTimeout(()=>{
         barOneStyle.backgroundColor = "red";
-    },i*10);
+    },i*speed);
     col=false;
     }
 
     else{
         setTimeout(()=>{
             barOneStyle.backgroundColor = "blue";
-        },i*10);
+        },i*speed);
         col=true;
     }
 
@@ -367,7 +378,7 @@ animatequicksort=()=>{
         barOneStyle.height=`${barTwoh}px`;
         barTwoStyle.height=`${barOneh}px`;
 
-    },i*10);
+    },i*speed);
 
     }
 
@@ -383,6 +394,7 @@ animatequicksort=()=>{
 animateheapsort=()=>{
     const animations=sortmethods.heapsortanimations(this.state.arrvals);
     const arrayBars=document.getElementsByClassName('mybars');
+    let speed=this.state.animspeed;
     let n=this.state.arrnum;
     let col=true;
     for(let i=0;i<animations.length;i++){
@@ -396,14 +408,14 @@ animateheapsort=()=>{
         if(col){
         setTimeout(()=>{
             barOneStyle.backgroundColor = "red";
-        },i*30);
+        },i*speed);
         col=false;
         }
     
         else{
             setTimeout(()=>{
                 barOneStyle.backgroundColor = "blue";
-            },i*30);
+            },i*speed);
             col=true;
         }
     
@@ -417,7 +429,7 @@ animateheapsort=()=>{
             setTimeout(()=>{
                 barOneStyle.backgroundColor = "green";
         
-            },i*30);
+            },i*speed);
     
         }
 
@@ -428,7 +440,7 @@ animateheapsort=()=>{
             setTimeout(()=>{
                 barOneStyle.backgroundColor = "blue";
         
-            },i*30);
+            },i*speed);
     
         }
 
@@ -444,7 +456,7 @@ animateheapsort=()=>{
             barOneStyle.height=`${barTwoh}px`;
             barTwoStyle.height=`${barOneh}px`;
     
-        },i*30);
+        },i*speed);
     
         }
 
@@ -466,31 +478,103 @@ handleChangeNo = value => {
   };
 
 
+  handleChangeAnim = value => {
+    this.setState({
+      animspeed: value
+    })
+    
+  };
+handlecompleteanim=()=>{
+    this.randarray();
+    const a=this.state.arrnum;
+    var highestTimeoutId = setTimeout(";");
+for (var i = 0 ; i < highestTimeoutId ; i++) {
+    clearTimeout(i); 
+}
+this.setState({
+    arrnum: a
+  })
+ // this.randarray();
+
+
+}
+
+handlecompleteNo=(value)=>{
+    
+    //const a=this.state.arrnum;
+    var highestTimeoutId = setTimeout(";");
+for (var i = 0 ; i < highestTimeoutId ; i++) {
+    clearTimeout(i); 
+}
+this.setState({
+    arrnum: value
+  })
+  this.randarray();
+}
+
+
+
+
+
     render() {
         const arrvals=this.state.arrvals;
         const arrnum=this.state.arrnum;
+        const animspeed=this.state.animspeed;
+
         return(  
         
-        <React.Fragment>
+        <React.Fragment >
+    <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    Sorting Algorithms
+      <h3 class="navbar-brand" >Sorting Algorithms</h3>
+    </div>
+    <button  class="btn btn-danger navbar-btn" onClick={this.randarray} style={{ margin: "2px" }}> Reset </button>
+    <button  class="btn btn-danger navbar-btn" onClick={this.animateinsertion} style={{ margin: "2px" }}> Insertion sort </button>
+    <button  class="btn btn-danger navbar-btn" onClick={this.animatebubble} style={{ margin: "2px" }}> Bubble sort </button>
+    <button  class="btn btn-danger navbar-btn" onClick={this.animatemerge} > Mergesort </button>
+    <button  class="btn btn-danger navbar-btn" onClick={this.animatequicksort} > Quicksort </button>
+    <button  class="btn btn-danger navbar-btn" onClick={this.animateheapsort} > Heapsort </button>
 
+
+    <ul class="nav navbar">
+      <li class="links"><a href="#" class="links">Home</a></li>
+      <li class="links"><Link to="/sortinfo" class="links">Learn about Sorting Algorithms</Link></li>
+      <li class="links"><Link to="/sortexecute" class="links">Implement Sorting Algorithms</Link></li>
+    </ul>
+   
+    
+  </div>
+</nav>
        <div className="allbtns">
-        <button onClick={this.randarray}  >Reset</button> 
-        <button onClick={this.animateinsertion}  >Insertion sort</button> 
-        <button onClick={this.animatebubble}  >Bubble sort</button> 
-        <button onClick={this.animatemerge}  >Mergesort</button> 
-        <button onClick={this.animatequicksort}  >Quicksort</button> 
-        <button onClick={this.animateheapsort}  >Heapsort</button> 
+       
         <div className='slider'>
+        <h5>Size of Array</h5>
         <Slider
           min={20}
           max={200}
           value={arrnum}
          
           onChange={this.handleChangeNo}
+          //onChangeComplete={this.handlecompleteNo}
+          //onChangeStart={this.handlecompleteNo}
           
         />
-      {arrnum}
+        </div>
+        
+        <div className='slider2'>
+        <h5>Animation Speed</h5>
+           <Slider
+          min={5}
+          max={100}
+          value={animspeed}
+          onChangeComplete={this.handlecompleteanim}
+          onChange={this.handleChangeAnim}
+          
+        />
       </div>
+      
 
         </div>
         <div className="allbars">
