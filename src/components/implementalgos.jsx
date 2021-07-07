@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
 import './editorstyle.css';
-import brace from 'brace';
 import AceEditor from 'react-ace';
-
+import "ace-builds/src-noconflict/ext-language_tools"
+import "ace-builds/src-noconflict/snippets/javascript";
 // Import a Mode (language)
-import 'brace/mode/java';
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/mode-c_cpp";
 
 // Import a Theme (okadia, github, xcode etc)
 require('brace/theme/monokai');
 
 
 class Implementalgos extends Component {
-    state = {  }
+    state = { 
+        language:"c_cpp",
 
+
+     }
+    constructor(props) {
+        super(props);
+        this.refName = React.createRef();
+      }
 
 componentDidMount(){
 //     <Helmet>
@@ -29,7 +39,34 @@ componentDidMount(){
 }
 
 initeditor=()=>{
-    
+    const selectedText = this.refName.current.editor.getValue()
+    console.log(selectedText);
+
+
+    fetch('/execute' , {
+        method: "POST",
+        headers: {
+          'Content-type': 'application/json'
+        },
+        
+            "script" : selectedText,
+            "language": "cpp17",
+            "versionIndex": "0",
+            "clientId": "9c2f22709b6836da6a6dc0adb4684c9b",
+            "clientSecret":"850acdb2fed73d6920cc3de9f2c99e25967c813e230f8d0870fc49b5270da9cc"
+        
+        
+    }
+    ).then((result) => {
+        console.log(result)
+      })
+
+
+    this.setState({
+        language:"c_cpp"
+    })
+
+
 
 }
 
@@ -43,22 +80,30 @@ initeditor=()=>{
 
 <div id="editor">
 <AceEditor 
-mode="javascript"
+ref={this.refName}
+mode={this.state.language}
 theme="monokai" 
-placeholder="Hello world"
+className="editor"
+width='100%'
+enableSnippets={true}
+focus={true}
+enableLiveAutocompletion={true}
+value="
+console.log('Hello world');"
+enableBasicAutocompletion={true}
+
 setOptions={{
-    enableBasicAutocompletion: true,
-    enableLiveAutocompletion: true,
-    enableSnippets: true
+    
+    focus:true,
+    fontSize:15
   }}
 
 />
-function foo(items) 
-    "Hello world"
+
     
 </div>
 
-
+<button onClick={this.initeditor}>click</button>
 
 
 
